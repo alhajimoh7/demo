@@ -17,6 +17,7 @@ import StellarSplit from '@/pages/StellarSplit';
 import Names from '@/pages/Names';
 import NamesAuctions from '@/pages/NamesAuctions';
 import Activity from '@/pages/Activity';
+import Portfolio from '@/pages/Portfolio';
 import Debug from '@/pages/Debug';
 import { useChain } from '@/context/ChainContext';
 import { useStealthKeys } from '@/context/StealthKeysContext';
@@ -189,6 +190,7 @@ export function App() {
           <Route path="/names/auctions" element={<NamesAuctions />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/history" element={<Activity />} />
+          <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/debug" element={<Debug />} />
           <Route path="*" element={<Navigate to="/send" replace />} />
         </Routes>
