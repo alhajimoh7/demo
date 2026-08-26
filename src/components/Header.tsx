@@ -7,6 +7,7 @@ import { LocaleSwitcher } from './LocaleSwitcher';
 import { NetworkChip } from './NetworkChip';
 import { useTheme } from '@/context/ThemeContext';
 import { useNotificationsStore } from '@/stores/notificationsStore';
+import { useStealthKeys } from '@/context/StealthKeysContext';
 
 const INSTALL_PROMPT_DISMISSED_KEY = 'wraith:pwa-install-dismissed';
 
@@ -22,6 +23,7 @@ export function Header() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const { theme, toggleTheme } = useTheme();
   const unreadCount = useNotificationsStore((state) => state.unreadCount());
+  const { isRecoveryMode } = useStealthKeys();
 
   useEffect(() => {
     const captureInstallPrompt = (event: Event) => {
@@ -71,6 +73,11 @@ export function Header() {
             <span className="bg-surface-bright px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-outline sm:text-[10px]">
               Demo
             </span>
+            {isRecoveryMode && (
+              <span className="border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider text-amber-400 sm:text-[10px]">
+                Recovery Mode
+              </span>
+            )}
           </Link>
 
           <nav className="hidden gap-0 sm:flex">
