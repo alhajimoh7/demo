@@ -15,6 +15,7 @@ import { useNotificationSW } from '@/hooks/useNotificationSW';
 import Schedule from '@/pages/Schedule';
 import StellarSplit from '@/pages/StellarSplit';
 import Names from '@/pages/Names';
+import NamesAuctions from '@/pages/NamesAuctions';
 import Activity from '@/pages/Activity';
 import Debug from '@/pages/Debug';
 import { useChain } from '@/context/ChainContext';
@@ -185,6 +186,7 @@ export function App() {
           <Route path="/stellar/split" element={<StellarSplit />} />
           <Route path="/pay" element={<Send />} />
           <Route path="/names" element={<Names />} />
+          <Route path="/names/auctions" element={<NamesAuctions />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/history" element={<Activity />} />
           <Route path="/debug" element={<Debug />} />
