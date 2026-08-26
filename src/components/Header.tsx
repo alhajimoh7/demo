@@ -5,6 +5,7 @@ import { ChainSwitcher } from './ChainSwitcher';
 import { WalletConnect } from './WalletConnect';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { NetworkChip } from './NetworkChip';
+import { PrivacyPostureChip } from './PrivacyPostureChip';
 import { useTheme } from '@/context/ThemeContext';
 import { useNotificationsStore } from '@/stores/notificationsStore';
 import { useStealthKeys } from '@/context/StealthKeysContext';
@@ -144,6 +145,7 @@ export function Header() {
           </button>
           <div className="hidden sm:flex sm:items-center sm:gap-3">
             <ChainSwitcher />
+            <PrivacyPostureChip />
             <NetworkChip />
             <WalletConnect />
           </div>
@@ -205,6 +207,12 @@ export function Header() {
                 {t('header.chain')}
               </span>
               <ChainSwitcher />
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-heading text-[10px] uppercase tracking-widest text-outline">
+                Privacy posture
+              </span>
+              <PrivacyPostureChip />
             </div>
             <div className="flex items-center justify-between gap-3">
               <span className="font-heading text-[10px] uppercase tracking-widest text-outline">
