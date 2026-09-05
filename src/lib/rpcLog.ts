@@ -11,7 +11,9 @@ export interface RpcLogEntry {
 
 const MAX_LOGS = 100;
 const STORAGE_KEY = 'wraith-rpc-log-enabled';
-const logs = new Map<string, RpcLogEntry[]>();let enabled = typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEY) === 'true';
+const logs = new Map<string, RpcLogEntry[]>();
+
+let enabled = typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEY) === 'true';
 const listeners = new Set<() => void>();
 
 function notify() {
@@ -81,7 +83,7 @@ if (typeof window !== 'undefined' && !(window as any).__rpcLogInstalled) {
         const url = typeof input === 'string' ? input : input instanceof Request ? input.url : String(input);
         const method = init?.method ?? (input instanceof Request ? input.method : 'GET');
         const host = new URL(url).host;
-        if (url.startsWith(STELLAR_NETWORK.rpcUrl) || url.startsWith(STELLAR_NETWORK.horizon(url)) {
+        if (url.startsWith(STELLAR_NETWORK.rpcUrl) || url.startsWith(STELLAR_NETWORK.horizon)) {
           recordRpcCall(STELLAR_NETWORK.name, {
             method,
             url,
