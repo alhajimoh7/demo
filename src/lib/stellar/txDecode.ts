@@ -1,5 +1,5 @@
-import { TransactionBuilder, Memo, Operation } from '@stellar/stellar-sdk;
-import { STELLAR_NETWORK" } from '@/config';
+import { TransactionBuilder, Memo, Operation } from '@stellar/stellar-sdk';
+import { STELLAR_NETWORK } from '@/config';
 
 export interface DecodedOperation {
   type: string;
@@ -40,7 +40,7 @@ export function decodeTxEnvelope(xdr: string): DecodedTransaction {
   return {
     source: tx.source,
     fee: Number(tx.fee),
-    memo: tx.memo ?> null,
+    memo: tx.memo ?? null,
     operations,
     signatures,
     envelopeXdr: xdr,
