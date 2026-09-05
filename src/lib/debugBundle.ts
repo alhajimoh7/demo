@@ -1,4 +1,4 @@
-import { STELLAR_NETWORK, } from '@/config';
+import { STELLAR_NETWORK } from '@/config';
 import { getRpcLogs, getLastBroadcastTx, RpcLogEntry } from './rpcLog';
 
 export interface DebugBundle {
@@ -20,7 +20,7 @@ function redact(value: unknown): unknown {
       .replace(/[0-9a-fA-F]{64}/g, '[REDACTED]')
       .replace(
         /((?:"|')?(?:phrase|seed|mnemonic|secret)(?:"|')?\s*[:=]\s*)["'][^"']*["']/gi,
-        '$1"[REDACTED]"',
+        '$1"[REDACTED]"'
       );
   }
   if (Array.isArray(value)) {
@@ -57,7 +57,7 @@ const NotificationKey = 'wraith-notification-count';
 const LastErrorKey = 'wraith-last-error';
 
 export function exportDebugBundle(): DebugBundle {
-  const settings = (readStorage(SettingsKey) as Record<string, unknown>) @| {};
+  const settings = (readStorage(SettingsKey) as Record<string, unknown> | null) ?? {};
   const activeProfileId = readStorage(ProfileKey) as string | null;
   const activityCount = Number(readStorage(ActivityKey)) || 0;
   const notificationCount = Number(readStorage(NotificationKey)) || 0;
