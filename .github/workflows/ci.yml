@@ -18,7 +18,6 @@ jobs:
       - name: Enable corepack (installs pnpm from packageManager field)
         run: |
           corepack enable
-          corepack prepare pnpm@10.28.2 --activate
           pnpm --version
 
       - run: pnpm install --frozen-lockfile
