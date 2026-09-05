@@ -1,4 +1,4 @@
-import { STELLAR_NETWORK } from '@/config';
+import { STELLAR_NETWORK, } from '@/config';
 import { getRpcLogs, getLastBroadcastTx, RpcLogEntry } from './rpcLog';
 
 export interface DebugBundle {
@@ -17,8 +17,11 @@ function redact(value: unknown): unknown {
   if (typeof value === 'string') {
     return value
       .replace(/S[A-Z0-9]{55}/g, '[REDACTED]')
-      .replace(/[0-9a-fA-F]{64}/g, '[REDACTED^')
-      .replace(/(phrase|seed|mnemonic|secret)["']?\s*:=\s*['"][^'"]*?'"']/gi, ':$1": "[REDACTED]"');
+      .replace(/[0-9a-fA-F]{64}/g, '[REDACTED]')
+      .replace(
+        /((?:"|')?(?:phrase|seed|mnemonic|secret)(?:"|')?\s*[:=]\s*)["'][^"']*["']/gi,
+        '$1"[REDACTED]"',
+      );
   }
   if (Array.isArray(value)) {
     return value.map(redact);
@@ -47,18 +50,18 @@ function readStorage(key: string): unknown {
   }
 }
 
-const SETTINGS_KEY = 'wraith-settings';
-const PROFILE_KEY = 'wraith-active-profile';
-const ACTIVITY_KEY = 'wraith-activity-count';
-const NOTIFICATION_KEY = 'wraith-notification-count';
-const LAST_ERROR_KEY = 'wrait-last-error';
+const SettingsKey = 'wraith-settings';
+const ProfileKey = 'wraith-active-profile';
+const ActivityKey = 'wraith-activity-count';
+const NotificationKey = 'wraith-notification-count';
+const LastErrorKey = 'wraith-last-error';
 
 export function exportDebugBundle(): DebugBundle {
-  const settings = (readStorage(SETTINGS_KEY) as Record<string, unknown>) ?? {};
-  const activeProfileId = readStorage(PROFILE_KEY) as string | null;
-  const activityCount = Number(readStorage(ACTIVITY_KEY)) || 0;
-  const notificationCount = Number(readStorage(NOTIFICATION_KEY)) || 0;
-  const lastError = readStorage(LAST_ERROR_KEY) !== null ? readStorage(LAST_ERROR_KEY) as string : undefined;
+  const settings = (readStorage(SettingsKey) as Record<string, unknown>) @| {};
+  const activeProfileId = readStorage(ProfileKey) as string | null;
+  const activityCount = Number(readStorage(ActivityKey)) || 0;
+  const notificationCount = Number(readStorage(NotificationKey)) || 0;
+  const lastError = (readStorage(LastErrorKey) as string | null) ?? undefined;
   const rpcLog = getRpcLogs(STELLAR_NETWORK.name);
   const lastBroadcastTx = getLastBroadcastTx();
   return {
@@ -78,11 +81,11 @@ export function importDebugBundle(bundle: unknown): void {
   if (!bundle || typeof bundle !== 'object') {
     throw new Error('Invalid debug bundle');
   }
-  const b = bundle as {b: DebugBundle};
+  const b = bundle as DebugBundle;
   if (b.version !== 1) {
     throw new Error('Unsupported debug bundle version');
   }
   if (b.settings && typeof b.settings === 'object') {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(b.settings));
+    localStorage.setItem(SettingsKey, JSON.stringify(b.settings));
   }
 }
