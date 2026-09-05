@@ -1,5 +1,5 @@
 import { STELLAR_NETWORK } from '@/config';
-import { getRpcLogs, getLastBroadcastTx, RpcLogEntry } from './rpcLog';
+import { getRpcLogs, getLastBroadcastTx, type RpcLogEntry } from './rpcLog';
 
 export interface DebugBundle {
   version: 1;
@@ -9,8 +9,8 @@ export interface DebugBundle {
   activityCount: number;
   notificationCount: number;
   rpcLog: RpcLogEntry[];
-  lastError?: string;
-  lastBroadcastTx?: string | null;
+  lastError?: string | undefined;
+  lastBroadcastTx?: string | null | undefined;
 }
 
 function redact(value: unknown): unknown {
